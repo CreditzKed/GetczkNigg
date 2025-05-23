@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pressure Video</title>
+  <title>Bye</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       height: 100vh;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: black;
+      flex-direction: column;
     }
+
     video {
       width: 80%;
       max-width: 960px;
@@ -20,10 +22,64 @@
       background: black;
       border: 2px solid #333;
       border-radius: 12px;
+      z-index: 0;
+    }
+
+    .overlay {
+      position: absolute;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 8px #ff69b4, 0 0 16px #ff69b4;
+      font-family: Arial, sans-serif;
+      z-index: 1;
+      padding: 1em;
+    }
+
+    .overlay h1 {
+      font-size: 2em;
+      margin: 0.5em 0;
+    }
+
+    .overlay h2 {
+      font-size: 1.2em;
+      margin: 0.3em 0;
+    }
+
+    .links {
+      margin-top: 1em;
+    }
+
+    .links p {
+      color: #ff69b4;
+      font-weight: bold;
+    }
+
+    .links a {
+      display: block;
+      color: #ff69b4;
+      text-decoration: none;
+      margin: 0.2em 0;
+      transition: text-shadow 0.3s;
+    }
+
+    .links a:hover {
+      text-shadow: 0 0 6px #ff69b4;
     }
   </style>
 </head>
 <body>
+  <div class="overlay">
+    <h1>Weareskidz is discontinued</h1>
+    <h2>Come back later maybe</h2>
+    <h2>Love u by creditz</h2>
+    <div class="links">
+      <p>Check these websites out:</p>
+      <a href="https://getneura.xyz/" target="_blank">getneura.xyz</a>
+      <a href="https://pulse-engine.netlify.app/" target="_blank">pulse-engine.netlify.app</a>
+      <a href="https://getneura.lol/" target="_blank">getneura.lol</a>
+    </div>
+  </div>
+
   <video id="video" autoplay muted playsinline>
     <source src="Pressure.mp4" type="video/mp4" />
     Your browser does not support the video tag.
@@ -31,15 +87,12 @@
 
   <script>
     const video = document.getElementById('video');
-
-    // Try to enable sound after autoplay (some browsers block this)
     video.addEventListener('canplay', () => {
       video.muted = false;
       video.volume = 1.0;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Autoplay with sound failed — browser probably blocked it.
           console.warn('Autoplay with sound was blocked.');
         });
       }

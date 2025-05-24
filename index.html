@@ -5,8 +5,7 @@
   <title>Bye</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: black;
       font-family: Arial, sans-serif;
       color: white;
@@ -14,31 +13,29 @@
       flex-direction: column;
       align-items: center;
     }
-
     .top-text {
       text-align: center;
       margin-top: 2em;
       text-shadow: 0 0 8px #ff69b4, 0 0 16px #ff69b4;
     }
-
-    .top-text h1 {
-      font-size: 2em;
-      margin: 0.2em 0;
+    .top-text h1 { font-size: 2em; margin: 0.2em 0; }
+    .top-text h2 { font-size: 1.2em; margin: 0.1em 0; }
+    .countdown {
+      margin-top: 1em;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ff69b4;
+      text-shadow: 0 0 8px #ff69b4, 0 0 16px #ff69b4;
     }
-
-    .top-text h2 {
-      font-size: 1.2em;
-      margin: 0.1em 0;
-    }
-
     .video-container {
       width: 80%;
       max-width: 960px;
       aspect-ratio: 16 / 9;
       margin-top: 1em;
       position: relative;
+      border-radius: 12px;
+      overflow: hidden;
     }
-
     video {
       width: 100%;
       height: 100%;
@@ -46,19 +43,17 @@
       border: 2px solid #333;
       border-radius: 12px;
       display: block;
+      outline: none;
     }
-
     .links {
       margin-top: 2em;
       text-align: center;
     }
-
     .links p {
       color: #ff69b4;
       font-weight: bold;
       margin-bottom: 0.5em;
     }
-
     .links a {
       display: block;
       color: #ff69b4;
@@ -67,7 +62,6 @@
       font-weight: bold;
       transition: text-shadow 0.3s;
     }
-
     .links a:hover {
       text-shadow: 0 0 6px #ff69b4;
     }
@@ -76,13 +70,17 @@
 <body>
 
   <div class="top-text">
-    <h1>Weareskidz is discontinued</h1>
-    <h2>Come back later maybe</h2>
+    <h1>Weareskidz is Coming Back!</h1>
+    <h2>Give us some time Thanks for waiting</h2>
     <h2>DISCORD.GG/REALCZK</h2>
   </div>
 
+  <div class="countdown" id="countdown">
+    Time until we are finished: 0h 0m 0s
+  </div>
+
   <div class="video-container">
-    <video id="video" autoplay loop playsinline>
+    <video id="video" autoplay loop playsinline muted controls>
       <source src="Pressure.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
@@ -90,21 +88,44 @@
 
   <div class="links">
     <p>Check these websites out:</p>
-    <a href="https://getneura.xyz/" target="_blank">getneura.xyz</a>
-    <a href="https://pulse-engine.netlify.app/" target="_blank">pulse-engine.netlify.app</a>
-    <a href="https://getneura.lol/" target="_blank">getneura.lol</a>
+    <a href="https://getneura.xyz/" target="_blank" rel="noopener noreferrer">getneura.xyz</a>
+    <a href="https://pulse-engine.netlify.app/" target="_blank" rel="noopener noreferrer">pulse-engine.netlify.app</a>
+    <a href="https://getneura.lol/" target="_blank" rel="noopener noreferrer">getneura.lol</a>
+    <a href="https://getczk.xyz/" target="_blank" rel="noopener noreferrer">getczk.xyz</a>
   </div>
 
   <script>
     const video = document.getElementById('video');
+    video.muted = false;  // try to unmute
     video.volume = 1;
-    video.muted = false;
-
-    window.addEventListener('load', () => {
-      video.play().catch(err => {
-        console.warn("Autoplay with sound failed:", err);
-      });
+    video.play().catch(e => {
+      console.warn('Autoplay with sound failed:', e);
+      // fallback: mute and play
+      video.muted = true;
+      video.play();
     });
+
+    // COUNTUP TIMER SCRIPT
+    const countdownEl = document.getElementById('countdown');
+
+    // Set a fixed start date (UTC) for the "count-up" timer — change as needed
+    const startDate = new Date(Date.UTC(2025, 4, 24, 0, 0, 0)); // May 24, 2025, 00:00:00 UTC (month is 0-based!)
+
+    function updateCountdown() {
+      const now = new Date();
+      let diff = Math.floor((now - startDate) / 1000); // difference in seconds
+
+      const hours = Math.floor(diff / 3600);
+      diff %= 3600;
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+
+      countdownEl.textContent = `Time until we are finished: ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // update immediately, then every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 
 </body>

@@ -5,7 +5,8 @@
   <title>Bye</title>
   <style>
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: black;
       font-family: Arial, sans-serif;
       color: white;
@@ -13,13 +14,23 @@
       flex-direction: column;
       align-items: center;
     }
+
     .top-text {
       text-align: center;
       margin-top: 2em;
       text-shadow: 0 0 8px #ff69b4, 0 0 16px #ff69b4;
     }
-    .top-text h1 { font-size: 2em; margin: 0.2em 0; }
-    .top-text h2 { font-size: 1.2em; margin: 0.1em 0; }
+
+    .top-text h1 {
+      font-size: 2em;
+      margin: 0.2em 0;
+    }
+
+    .top-text h2 {
+      font-size: 1.2em;
+      margin: 0.1em 0;
+    }
+
     .video-container {
       width: 80%;
       max-width: 960px;
@@ -27,6 +38,7 @@
       margin-top: 1em;
       position: relative;
     }
+
     video {
       width: 100%;
       height: 100%;
@@ -35,15 +47,18 @@
       border-radius: 12px;
       display: block;
     }
+
     .links {
       margin-top: 2em;
       text-align: center;
     }
+
     .links p {
       color: #ff69b4;
       font-weight: bold;
       margin-bottom: 0.5em;
     }
+
     .links a {
       display: block;
       color: #ff69b4;
@@ -52,6 +67,7 @@
       font-weight: bold;
       transition: text-shadow 0.3s;
     }
+
     .links a:hover {
       text-shadow: 0 0 6px #ff69b4;
     }
@@ -66,7 +82,7 @@
   </div>
 
   <div class="video-container">
-    <video id="video" loop playsinline>
+    <video id="video" autoplay loop playsinline>
       <source src="Pressure.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
@@ -84,14 +100,10 @@
     video.volume = 1;
     video.muted = false;
 
-    // Try force playing with sound
     window.addEventListener('load', () => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.warn("Autoplay with sound was blocked:", error);
-        });
-      }
+      video.play().catch(err => {
+        console.warn("Autoplay with sound failed:", err);
+      });
     });
   </script>
 
